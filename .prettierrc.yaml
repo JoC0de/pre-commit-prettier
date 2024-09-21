@@ -1,0 +1,30 @@
+﻿# see https://prettier.io/docs/en/options.html
+
+# Specify the line length that the printer will wrap on.
+printWidth: 150
+# Specify the number of spaces per indentation-level.
+tabWidth: 2
+
+endOfLine: "crlf"
+
+# Whitespaces are considered insensitive.
+htmlWhitespaceSensitivity: "ignore"
+
+# Overrides for some file types
+overrides:
+  - files: "*.html"
+
+  - files:
+      - "*.yml"
+      - "*.yaml"
+    options:
+      parser: "yaml"
+      tabWidth: 2
+
+  # no javascript trailing comma as ReSharper complains with
+  # UnsafeCommaInObjectPropertiesList: https://www.jetbrains.com/help/resharper/Reference__Code_Inspections_JAVA_SCRIPT.html#LanguageUsage
+  - files:
+      - "*.js"
+      - "*.html"
+    options:
+      trailingComma: none

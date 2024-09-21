@@ -1,9 +1,12 @@
 {
-    "name": "pre-commit-prettier",
-    "description": "Wrapper for plugin support for prettier",
-    "version": "1.0.0",
-    "bin": "./run-prettier.js",
-    "main": "./run-prettier.js",
-    "license": "MIT",
-    "type": "module"
+  "name": "pre-commit-prettier",
+  "description": "Wrapper for plugin support for prettier",
+  "version": "1.0.0",
+  "bin": "./run-prettier.js",
+  "main": "./run-prettier.js",
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "run-prettier.js"
+  ]
 }
