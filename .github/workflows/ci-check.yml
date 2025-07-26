@@ -1,0 +1,41 @@
+name: Test if pre-commit prettier works
+
+on:
+  push:
+    branches: [main]
+  pull_request: {}
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  check-with-SHA:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      - name: Install pre-commit
+        run: pip install pre-commit pyYAML
+
+      - name: Inject PR SHA into pre-commit config
+        run: |
+          echo "repo: ${REPO_NAME}"
+          echo "git SHA: ${COMMIT_SHA}"
+          python .github/inject-sha.py ${COMMIT_SHA} ${REPO_NAME}
+          cat .pre-commit-config.yaml
+        env:
+          REPO_NAME: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
+          # pre-commit failes when SHA is of a merged commit (of a pull request) -> we fallback to the current commit on the pull request
+          COMMIT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+
+      - name: Run pre-commit hooks
+        run: |
+          pre-commit run --files run-prettier.js README.md package.json .prettierrc.yaml
